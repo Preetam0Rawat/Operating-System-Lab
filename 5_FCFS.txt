@@ -56,7 +56,7 @@ int main()
             p[i].rt = p[i].st - p[i].at;
             p[i].tat = p[i].ct - p[i].at;
             p[i].wt = p[i].tat - p[i].bt;
-            idle = idle + (p[i-1].ct - p[i].at); 
+            idle = idle + (p[i].at - p[i-1].ct); 
         }
         
         if(p[i-1].ct > p[i].at)
