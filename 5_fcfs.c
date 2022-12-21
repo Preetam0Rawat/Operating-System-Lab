@@ -1,6 +1,7 @@
 #include<stdio.h>
 struct process
 {
+    int pid;
     int st;
     int ct;
     int at;
@@ -12,18 +13,22 @@ struct process
 
 int main()
 {   int idle = 0;
-    struct process p[3];
+    int n;
+    printf("Enter size : ");
+    scanf("%d", &n);
+    struct process p[n];
     
-    for(int i =0; i< 3; i++)
+    for(int i =0; i< n; i++)
     {
-       printf("Enter arrival time and burst time for procss %d :\n", i);
+       printf("Enter arrival time and burst time for procss %d : ", i);
        scanf("%d%d", &p[i].at, &p[i].bt);
+       p[i].pid = i;
     }
     
     struct process temp;
-    for(int i = 0; i< 3 ; i++)
+    for(int i = 0; i< n ; i++)
      {
-       for(int j = i+1; j <3; j++)
+       for(int j = i+1; j <n; j++)
        {
           if(p[i]. at > p[j]. at)
            { temp = p[i];
@@ -33,12 +38,8 @@ int main()
        }
      }
     
-    printf("After sorting :\n");
-    
-    for(int i =0; i< 3; i++)
-      printf("Process %d ------->   Arrival Time = %d    Burst Time : %d\n", i, p[i].at, p[i].bt);
-    
-    for(int i =0; i< 3; i++)
+   
+    for(int i = 0; i< n; i++)
     {
         if(i==0)
         {
@@ -48,7 +49,7 @@ int main()
             p[i].tat = p[i].ct - p[i].at;
             p[i].wt = p[i].tat - p[i].bt;
         }
-        
+        else
         if(p[i-1].ct < p[i].at)
         {
             p[i].st = p[i].at;
@@ -59,7 +60,7 @@ int main()
             idle = idle + (p[i].at - p[i-1].ct); 
         }
         
-        if(p[i-1].ct > p[i].at)
+        else
         {
             p[i].st = p[i-1].ct;
             p[i].ct = p[i].st + p[i].bt; 
@@ -70,20 +71,19 @@ int main()
         
     }
     
-    float cyc_len = p[2].ct - p[0].st;     
-    float throughput = 3/cyc_len;      
+    float cyc_len = p[n-1].ct - p[0].st;     
+    float throughput = n/cyc_len;      
     float cpu = ((cyc_len - idle) / cyc_len) * 100;
     
-    for(int i =0; i< 3; i++)
+    
+        
+    printf("\nProcess\t\tAt\tBt\tSt\tCt\tRt\tTt\tWt\n");
+    
+    for(int i = 0; i<n; i++)
     {
-        printf("Start time ; %d\n", p[i].st);
-        printf("Completion time : %d\n", p[i].ct);
-        printf("Response time : %d\n", p[i].rt);
-        printf("Turn around time : %d\n", p[i].tat);
-        printf("wait time : %d\n\n\n\n", p[i].wt);
-        
-        
+        printf("%d\t\t\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", p[i].pid, p[i].at, p[i].bt, p[i].st, p[i].ct, p[i].rt, p[i].tat, p[i].wt);
     }
+    
     
     printf("Throughput ; %0.2f\n", throughput);
     printf("CPU Utilization ; %0.2f\n", cpu);
