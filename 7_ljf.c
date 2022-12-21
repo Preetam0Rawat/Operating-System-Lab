@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-# define MAX 1000
+# define MIN -1
 
 struct Process{
     int pid,at,bt,ct, tat,wt,rt,st;
@@ -20,7 +20,7 @@ int main(){
 
     for(int i = 0 ; i < n ; i++)
     {
-        p[i].pid = i;
+        p[i].pid = i+1;
         printf("Enter the Arrival Time and Burst Time for Process = %d - " , p[i].pid);
         scanf("%d%d" , &p[i].at , &p[i].bt);
         p[i].st = -1;
@@ -30,15 +30,15 @@ int main(){
     // bubble sort
     struct Process temp;
 
-    for(int i = 0 ; i < n-1 ; i++)
+    for(int i = 0 ; i < n; i++)
     {
-        for(int j = 0 ; j < n-i-1 ; j++)
+        for(int j = i+1 ; j < n ; j++)
         {
-            if(p[j].at > p[j+1].at)
+            if(p[i].at > p[j].at)
             {
-                temp = p[j];
-                p[j]= p[j+1];
-                p[j+1]= temp;
+                temp = p[i];
+                p[i]= p[j];
+                p[j]= temp;
             }
         }
     }
@@ -51,18 +51,18 @@ int main(){
   p[0].wt = p[0].tat - p[0].bt;
   cont = p[0].ct;
   
-  for(int i = 1; i< n ; i++)
-     {
-       for(int j = i+1; j <n; j++)
-       {
-          if(p[i].bt < p[j].bt)
-           { temp = p[i];
-             p[i] = p[j];
-             p[j]  = temp;
-           }
-       }
-       
-     }
+  for(int i = 1; i < n ; i++)
+    {
+        for(int j = i+1 ; j < n ; j++)
+        {
+            if(p[i].bt < p[j].bt)
+            {
+                temp = p[i];
+                p[i]= p[j];
+                p[j]= temp;
+            }
+        }
+    }
  for(int i = 1; i<n; i++)
  {
   p[i].st =  cont;
