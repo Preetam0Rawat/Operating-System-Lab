@@ -94,12 +94,11 @@ int main(){
 
 struct Process{
     int pid,at,bt,ct, tat,wt,rt,st, done;
-    int rem;
 };
 
 int main(){
 
-    int n  , cont = 0, remain = 0; // store of remaining process
+    int n  , remain = 0; // store of remaining process
     int mn; // track the min val
     float avgrt = 0, avgWT = 0 , avgTat = 0 ;
     float sumWT = 0 , sumTat = 0 , sumrt = 0;
@@ -133,7 +132,7 @@ int main(){
     }
     p[0].st = -1;
     p[n].bt = MAX;
-   
+    int cont  =  p[0].at;
     for(int time = 0 ; remain != n ; time++)
     {
         mn = n;
@@ -149,7 +148,7 @@ int main(){
 
         if(p[mn].st == -1)
         {
-            p[mn].st = time;
+            p[mn].st = cont;
             p[mn].ct = p[mn].st + p[mn].bt;
             p[mn].tat = p[mn].ct - p[mn].at;
             p[mn].wt = p[mn].tat - p[mn].bt;
